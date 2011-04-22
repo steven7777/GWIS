@@ -1,0 +1,2395 @@
+Activity:
+  connection: doctrine
+  tableName: activity
+  columns:
+    id:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: true
+      autoincrement: true
+    num:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: false
+      notnull: true
+      autoincrement: false
+    activitytype_id:
+      type: string(3)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+    name:
+      type: string(8)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+    longname:
+      type: string(60)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+    description:
+      type: string()
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    homepage_url:
+      type: string(200)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+  relations:
+    Activitytype:
+      local: activitytype_id
+      foreign: id
+      type: one
+    Activityitem:
+      local: id
+      foreign: activity_id
+      type: many
+    Event:
+      local: id
+      foreign: activity_id
+      type: many
+    InstituteActivity:
+      local: id
+      foreign: activity_id
+      type: many
+    PersonActivity:
+      local: id
+      foreign: activity_id
+      type: many
+Activityitem:
+  connection: doctrine
+  tableName: activityitem
+  columns:
+    id:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: true
+      autoincrement: true
+    num:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: false
+      notnull: true
+      autoincrement: false
+    activity_id:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: false
+      notnull: true
+      autoincrement: false
+    name:
+      type: string(50)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+  relations:
+    Activity:
+      local: activity_id
+      foreign: id
+      type: one
+    Doctype:
+      local: id
+      foreign: activityitem_id
+      type: many
+Activitytype:
+  connection: doctrine
+  tableName: activitytype
+  columns:
+    id:
+      type: string(3)
+      fixed: false
+      unsigned: false
+      primary: true
+      autoincrement: false
+    name:
+      type: string(80)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+    description:
+      type: string()
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+  relations:
+    Activity:
+      local: id
+      foreign: activitytype_id
+      type: many
+Country:
+  connection: doctrine
+  tableName: country
+  columns:
+    id:
+      type: string(2)
+      fixed: true
+      unsigned: false
+      primary: true
+      autoincrement: false
+    name:
+      type: string(60)
+      fixed: false
+      unsigned: false
+      primary: false
+      default: ''
+      notnull: true
+      autoincrement: false
+  relations:
+    Institute:
+      local: id
+      foreign: country_id
+      type: many
+Doc:
+  connection: doctrine
+  tableName: doc
+  actAs : { Timestampable: ~ }
+  columns:
+    id:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: true
+      autoincrement: true
+    person_provider_id:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: false
+      notnull: false
+      autoincrement: false
+    person_author_id:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: false
+      notnull: false
+      autoincrement: false
+    docot_id:
+      type: string(5)
+      fixed: true
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    ref:
+      type: string(45)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    name:
+      type: string(100)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+    filename:
+      type: string(150)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+    description:
+      type: string(200)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    is_public:
+      type: boolean
+      fixed: false
+      unsigned: false
+      primary: false
+      default: '1'
+      notnull: true
+      autoincrement: false
+    is_enabled:
+      type: boolean
+      fixed: false
+      unsigned: false
+      primary: false
+      default: '0'
+      notnull: true
+      autoincrement: false
+  relations:
+    Docot:
+      local: docot_id
+      foreign: id
+      type: one
+    Person:
+      local: person_author_id
+      foreign: id
+      type: one
+    Person_3:
+      class: Person
+      local: person_provider_id
+      foreign: id
+      type: one
+    DocDoctype:
+      local: id
+      foreign: doc_id
+      type: many
+DocDoctype:
+  connection: doctrine
+  tableName: doc_doctype
+  columns:
+    doc_id:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: true
+      autoincrement: false
+    doctype_id:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: true
+      autoincrement: false
+  relations:
+    Doc:
+      local: doc_id
+      foreign: id
+      type: one
+    Doctype:
+      local: doctype_id
+      foreign: id
+      type: one
+Docot:
+  connection: doctrine
+  tableName: docot
+  columns:
+    id:
+      type: string(5)
+      fixed: true
+      unsigned: false
+      primary: true
+      autoincrement: false
+    name:
+      type: string(100)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+  relations:
+    Doc:
+      local: id
+      foreign: docot_id
+      type: many
+Doctype:
+  connection: doctrine
+  tableName: doctype
+  columns:
+    id:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: true
+      autoincrement: true
+    num:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: false
+      notnull: true
+      autoincrement: false
+    activityitem_id:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: false
+      notnull: true
+      autoincrement: false
+    name:
+      type: string(100)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+  relations:
+    Activityitem:
+      local: activityitem_id
+      foreign: id
+      type: one
+    DocDoctype:
+      local: id
+      foreign: doctype_id
+      type: many
+Domain:
+  connection: doctrine
+  tableName: domain
+  columns:
+    id:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: true
+      autoincrement: true
+    name:
+      type: string(50)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+  relations:
+    Person:
+      local: id
+      foreign: domain_id
+      type: many
+    PersonDomain:
+      local: id
+      foreign: domain_id
+      type: many
+Event:
+  connection: doctrine
+  tableName: event
+  columns:
+    id:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: true
+      autoincrement: true
+    name:
+      type: string(50)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+    type:
+      type: enum(7)
+      fixed: false
+      unsigned: false
+      values:
+        - News
+        - Call
+        - Meeting
+      primary: false
+      default: News
+      notnull: false
+      autoincrement: false
+    activity_id:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: false
+      notnull: false
+      autoincrement: false
+    person_responsible_id:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: false
+      notnull: false
+      autoincrement: false
+    purpose:
+      type: string(200)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    description:
+      type: string()
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    institute_id:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: false
+      notnull: false
+      autoincrement: false
+    place:
+      type: string(60)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    date:
+      type: date(25)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    duration:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: false
+      notnull: false
+      autoincrement: false
+    registration_open_time:
+      type: timestamp(25)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    registration_close_time:
+      type: timestamp(25)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    nice_name_1:
+      type: string(50)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    host_website_1:
+      type: string(200)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    nice_name_2:
+      type: string(50)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    host_website_2:
+      type: string(200)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    is_news:
+      type: boolean
+      fixed: false
+      unsigned: false
+      primary: false
+      default: '1'
+      notnull: false
+      autoincrement: false
+    is_important:
+      type: boolean
+      fixed: false
+      unsigned: false
+      primary: false
+      default: '0'
+      notnull: false
+      autoincrement: false
+  relations:
+    Activity:
+      local: activity_id
+      foreign: id
+      type: one
+    Institute:
+      local: institute_id
+      foreign: id
+      type: one
+    Person:
+      local: person_responsible_id
+      foreign: id
+      type: one
+    EventPerson:
+      local: id
+      foreign: event_id
+      type: many
+EventPerson:
+  connection: doctrine
+  tableName: event_person
+  columns:
+    event_id:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: true
+      autoincrement: false
+    person_id:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: true
+      autoincrement: false
+  relations:
+    Event:
+      local: event_id
+      foreign: id
+      type: one
+    Person:
+      local: person_id
+      foreign: id
+      type: one
+Expertise:
+  connection: doctrine
+  tableName: expertise
+  columns:
+    id:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: true
+      autoincrement: true
+    name:
+      type: string(40)
+      fixed: false
+      unsigned: false
+      primary: false
+      default: ''
+      notnull: true
+      autoincrement: false
+  relations:
+    PersonExpertise:
+      local: id
+      foreign: expertise_id
+      type: many
+    ResourceExpertise:
+      local: id
+      foreign: expertise_id
+      type: many
+Institute:
+  connection: doctrine
+  tableName: institute
+  actAs : { Timestampable: ~ }
+  columns:
+    id:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: true
+      autoincrement: true
+    node_id:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: false
+      notnull: false
+      autoincrement: false
+    is_node_leader:
+      type: boolean
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    participant_status:
+      type: enum(11)
+      fixed: false
+      unsigned: false
+      values:
+        - Participant
+        - 'Lab non EPN'
+        - Associate
+      primary: false
+      default: 'Lab non EPN'
+      notnull: true
+      autoincrement: false
+    participant_num:
+      type: string(6)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    institute_id:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: false
+      notnull: false
+      autoincrement: false
+    name:
+      type: string(10)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+    fullname:
+      type: string(80)
+      fixed: false
+      unsigned: false
+      primary: false
+      default: ''
+      notnull: true
+      autoincrement: false
+    country_id:
+      type: string(2)
+      fixed: true
+      unsigned: false
+      primary: false
+      default: FR
+      notnull: true
+      autoincrement: false
+    address:
+      type: string(120)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    postcode:
+      type: string(10)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    city:
+      type: string(30)
+      fixed: false
+      unsigned: false
+      primary: false
+      default: ''
+      notnull: true
+      autoincrement: false
+    cedex:
+      type: string(10)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    excellence_fields:
+      type: string()
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+    labos:
+      type: string()
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    specific_role:
+      type: string()
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    homepage:
+      type: string(120)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+  relations:
+    Country:
+      local: country_id
+      foreign: id
+      type: one
+    Institute:
+      local: id
+      foreign: institute_id
+      type: many
+    Node:
+      local: node_id
+      foreign: id
+      type: one
+    Event:
+      local: id
+      foreign: institute_id
+      type: many
+    InstituteActivity:
+      local: id
+      foreign: institute_id
+      type: many
+    InstituteKeyword:
+      local: id
+      foreign: institute_id
+      type: many
+    Person:
+      local: id
+      foreign: institute_id
+      type: many
+    Resource:
+      local: id
+      foreign: institute_id
+      type: many
+InstituteActivity:
+  connection: doctrine
+  tableName: institute_activity
+  columns:
+    activity_id:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: true
+      autoincrement: false
+    institute_id:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: true
+      autoincrement: false
+    special_status:
+      type: enum(11)
+      fixed: false
+      unsigned: false
+      values:
+        - Coordinator
+      primary: false
+      notnull: false
+      autoincrement: false
+  relations:
+    Activity:
+      local: activity_id
+      foreign: id
+      type: one
+    Institute:
+      local: institute_id
+      foreign: id
+      type: one
+InstituteKeyword:
+  connection: doctrine
+  tableName: institute_keyword
+  columns:
+    institute_id:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: true
+      autoincrement: false
+    keyword_id:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: true
+      autoincrement: false
+  relations:
+    Institute:
+      local: institute_id
+      foreign: id
+      type: one
+    Keyword:
+      local: keyword_id
+      foreign: id
+      type: one
+Job:
+  connection: doctrine
+  tableName: job
+  actAs : { Timestampable: ~ }
+  columns:
+    id:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: true
+      autoincrement: true
+    name:
+      type: string(200)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+    institute:
+      type: string(200)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+    location:
+      type: string(100)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+    duration:
+      type: string(200)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    qualification:
+      type: string()
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    duties:
+      type: string()
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+    website:
+      type: string(200)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    contact:
+      type: string(60)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    how_to_apply:
+      type: string()
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+    closing_date:
+      type: string(200)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    is_valid:
+      type: boolean
+      fixed: false
+      unsigned: false
+      primary: false
+      default: '1'
+      notnull: true
+      autoincrement: false
+    sort_date:
+      type: date(25)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+Keyword:
+  connection: doctrine
+  tableName: keyword
+  columns:
+    id:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: true
+      autoincrement: true
+    keywordtype_id:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: false
+      default: '0'
+      notnull: true
+      autoincrement: false
+    keyword_id:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: false
+      notnull: false
+      autoincrement: false
+    family:
+      type: string(100)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    name:
+      type: string(100)
+      fixed: false
+      unsigned: false
+      primary: false
+      default: ''
+      notnull: true
+      autoincrement: false
+    description:
+      type: string(200)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+  relations:
+    Keyword:
+      local: id
+      foreign: keyword_id
+      type: many
+    Keywordtype:
+      local: keywordtype_id
+      foreign: id
+      type: one
+    InstituteKeyword:
+      local: id
+      foreign: keyword_id
+      type: many
+    PersonKeyword:
+      local: id
+      foreign: keyword_id
+      type: many
+    ResourceKeyword:
+      local: id
+      foreign: keyword_id
+      type: many
+Keywordtype:
+  connection: doctrine
+  tableName: keywordtype
+  columns:
+    id:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: true
+      autoincrement: true
+    name:
+      type: string(30)
+      fixed: false
+      unsigned: false
+      primary: false
+      default: ''
+      notnull: true
+      autoincrement: false
+    card_min:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: false
+      default: '0'
+      notnull: true
+      autoincrement: false
+    card_max:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: false
+      default: '0'
+      notnull: true
+      autoincrement: false
+  relations:
+    Keyword:
+      local: id
+      foreign: keywordtype_id
+      type: many
+N2dwg:
+  connection: doctrine
+  tableName: n2dwg
+  columns:
+    id:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: true
+      autoincrement: true
+    num:
+      type: string(3)
+      fixed: true
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+    name:
+      type: string(100)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+    description:
+      type: string()
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+  relations:
+    N2dwgSciencecase:
+      local: id
+      foreign: n2dwg_id
+      type: many
+    Person:
+      local: id
+      foreign: n2dwg_id
+      type: many
+    PersonN2dwg:
+      local: id
+      foreign: n2dwg_id
+      type: many
+N2dwgSciencecase:
+  connection: doctrine
+  tableName: n2dwg_sciencecase
+  columns:
+    n2dwg_id:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: true
+      autoincrement: false
+    sciencecase_id:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: true
+      autoincrement: false
+  relations:
+    N2dwg:
+      local: n2dwg_id
+      foreign: id
+      type: one
+    Sciencecase:
+      local: sciencecase_id
+      foreign: id
+      type: one
+Node:
+  connection: doctrine
+  tableName: node
+  columns:
+    id:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: true
+      autoincrement: true
+    num:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: false
+      notnull: true
+      autoincrement: false
+    name:
+      type: string(60)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+    url:
+      type: string(150)
+      fixed: false
+      unsigned: false
+      primary: false
+      default: 'http://'
+      notnull: false
+      autoincrement: false
+  relations:
+    Institute:
+      local: id
+      foreign: node_id
+      type: many
+    NodePdsnode:
+      local: id
+      foreign: node_id
+      type: many
+    NodeSciencecase:
+      local: id
+      foreign: node_id
+      type: many
+    Person:
+      local: id
+      foreign: node_id
+      type: many
+    Person_5:
+      class: Person
+      local: id
+      foreign: node_leading_id
+      type: many
+    Resource:
+      local: id
+      foreign: node_id
+      type: many
+    Resource_7:
+      class: Resource
+      local: id
+      foreign: node_id
+      type: many
+    ResourceNode:
+      local: id
+      foreign: node_id
+      type: many
+    Sciencecase:
+      local: id
+      foreign: node_id
+      type: many
+NodePdsnode:
+  connection: doctrine
+  tableName: node_pdsnode
+  columns:
+    node_id:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: true
+      autoincrement: false
+    pdsnode_id:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: true
+      autoincrement: false
+  relations:
+    Node:
+      local: node_id
+      foreign: id
+      type: one
+    Pdsnode:
+      local: pdsnode_id
+      foreign: id
+      type: one
+NodeSciencecase:
+  connection: doctrine
+  tableName: node_sciencecase
+  columns:
+    node_id:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: true
+      autoincrement: false
+    sciencecase_id:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: true
+      autoincrement: false
+  relations:
+    Node:
+      local: node_id
+      foreign: id
+      type: one
+    Sciencecase:
+      local: sciencecase_id
+      foreign: id
+      type: one
+Pdsnode:
+  connection: doctrine
+  tableName: pdsnode
+  columns:
+    id:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: true
+      autoincrement: true
+    name:
+      type: string(60)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+    url:
+      type: string(150)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+  relations:
+    NodePdsnode:
+      local: id
+      foreign: pdsnode_id
+      type: many
+Person:
+  connection: doctrine
+  tableName: person
+  actAs : { Timestampable: ~ }
+  columns:
+    id:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: true
+      autoincrement: true
+    institute_id:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: false
+      notnull: false
+      autoincrement: false
+    institute_other:
+      type: string(100)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    n2dwg_id:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: false
+      notnull: false
+      autoincrement: false
+    node_id:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: false
+      notnull: false
+      autoincrement: false
+    domain_id:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: false
+      notnull: false
+      autoincrement: false
+    other_node_thematic:
+      type: string(60)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    node_leading_id:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: false
+      notnull: false
+      autoincrement: false
+    node_leading_status:
+      type: enum(10)
+      fixed: false
+      unsigned: false
+      values:
+        - scientific
+        - technical
+      primary: false
+      notnull: false
+      autoincrement: false
+    profile:
+      type: enum(11)
+      fixed: false
+      unsigned: false
+      values:
+        - normal
+        - priviledged
+        - admin
+        - dev
+      primary: false
+      default: normal
+      notnull: true
+      autoincrement: false
+    is_enabled:
+      type: boolean
+      fixed: false
+      unsigned: false
+      primary: false
+      default: '0'
+      notnull: true
+      autoincrement: false
+    is_epn_contact:
+      type: boolean
+      fixed: false
+      unsigned: false
+      primary: false
+      default: '0'
+      notnull: false
+      autoincrement: false
+    name:
+      type: string(30)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+    firstname:
+      type: string(30)
+      fixed: false
+      unsigned: false
+      primary: false
+      default: ''
+      notnull: true
+      autoincrement: false
+    email:
+      type: string(60)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+    pass:
+      type: string(41)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+    tel:
+      type: string(30)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    fax:
+      type: string(30)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    department:
+      type: string(100)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    role:
+      type: string(60)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+    title:
+      type: string(50)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    url:
+      type: string(200)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    sf_guard_user_id:
+      type: integer
+  relations:
+    User:
+      class: sfGuardUser
+      foreignType: one
+    Domain:
+      local: domain_id
+      foreign: id
+      type: one
+    Institute:
+      local: institute_id
+      foreign: id
+      type: one
+    N2dwg:
+      local: n2dwg_id
+      foreign: id
+      type: one
+    Node:
+      local: node_id
+      foreign: id
+      type: one
+    Node_5:
+      class: Node
+      local: node_leading_id
+      foreign: id
+      type: one
+    Doc:
+      local: id
+      foreign: person_author_id
+      type: many
+    Doc_3:
+      class: Doc
+      local: id
+      foreign: person_provider_id
+      type: many
+    Event:
+      local: id
+      foreign: person_responsible_id
+      type: many
+    EventPerson:
+      local: id
+      foreign: person_id
+      type: many
+    PersonActivity:
+      local: id
+      foreign: person_id
+      type: many
+    PersonDomain:
+      local: id
+      foreign: person_id
+      type: many
+    PersonExpertise:
+      local: id
+      foreign: person_id
+      type: many
+    PersonKeyword:
+      local: id
+      foreign: person_id
+      type: many
+    PersonN2dwg:
+      local: id
+      foreign: person_id
+      type: many
+    PersonSciencecase:
+      local: id
+      foreign: person_id
+      type: many
+    Resource:
+      local: id
+      foreign: person_id
+      type: many
+    Resource_4:
+      class: Resource
+      local: id
+      foreign: person_contact_id
+      type: many
+    Resource_5:
+      class: Resource
+      local: id
+      foreign: person_responsible_id
+      type: many
+    Resource_6:
+      class: Resource
+      local: id
+      foreign: person_updater_id
+      type: many
+    Task:
+      local: id
+      foreign: person_id
+      type: many
+PersonActivity:
+  connection: doctrine
+  tableName: person_activity
+  columns:
+    person_id:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: true
+      autoincrement: false
+    activity_id:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: true
+      autoincrement: false
+    special_status:
+      type: enum(18)
+      fixed: false
+      unsigned: false
+      values:
+        - Coordinator
+        - 'Deputy Coordinator'
+        - 'Task Leader'
+        - 'Science Manager'
+        - 'Technical Manager'
+        - Expert
+      primary: false
+      notnull: false
+      autoincrement: false
+  relations:
+    Person:
+      local: person_id
+      foreign: id
+      type: one
+    Activity:
+      local: activity_id
+      foreign: id
+      type: one
+PersonDomain:
+  connection: doctrine
+  tableName: person_domain
+  columns:
+    person_id:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: true
+      autoincrement: false
+    domain_id:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: true
+      autoincrement: false
+  relations:
+    Person:
+      local: person_id
+      foreign: id
+      type: one
+    Domain:
+      local: domain_id
+      foreign: id
+      type: one
+PersonExpertise:
+  connection: doctrine
+  tableName: person_expertise
+  columns:
+    person_id:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: true
+      autoincrement: false
+    expertise_id:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: true
+      autoincrement: false
+  relations:
+    Person:
+      local: person_id
+      foreign: id
+      type: one
+    Expertise:
+      local: expertise_id
+      foreign: id
+      type: one
+PersonKeyword:
+  connection: doctrine
+  tableName: person_keyword
+  columns:
+    person_id:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: true
+      autoincrement: false
+    keyword_id:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: true
+      autoincrement: false
+  relations:
+    Person:
+      local: person_id
+      foreign: id
+      type: one
+    Keyword:
+      local: keyword_id
+      foreign: id
+      type: one
+PersonN2dwg:
+  connection: doctrine
+  tableName: person_n2dwg
+  columns:
+    person_id:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: true
+      autoincrement: false
+    n2dwg_id:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: true
+      autoincrement: false
+    special_status:
+      type: enum(9)
+      fixed: false
+      unsigned: false
+      values:
+        - Leader
+        - Co-Leader
+      primary: false
+      notnull: false
+      autoincrement: false
+  relations:
+    Person:
+      local: person_id
+      foreign: id
+      type: one
+    N2dwg:
+      local: n2dwg_id
+      foreign: id
+      type: one
+PersonSciencecase:
+  connection: doctrine
+  tableName: person_sciencecase
+  columns:
+    person_id:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: true
+      autoincrement: false
+    sciencecase_id:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: true
+      autoincrement: false
+    special_status:
+      type: enum(8)
+      fixed: false
+      unsigned: false
+      values:
+        - Proposer
+        - Contact
+      primary: false
+      default: Contact
+      notnull: true
+      autoincrement: false
+  relations:
+    Person:
+      local: person_id
+      foreign: id
+      type: one
+    Sciencecase:
+      local: sciencecase_id
+      foreign: id
+      type: one
+Resource:
+  connection: doctrine
+  tableName: resource
+  actAs : { Timestampable: ~ }
+  columns:
+    id:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: true
+      autoincrement: true
+    node_id:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: false
+      notnull: true
+      autoincrement: false
+    resourcetype_id:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: false
+      default: '0'
+      notnull: true
+      autoincrement: false
+    person_id:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: false
+      default: '0'
+      notnull: true
+      autoincrement: false
+    person_updater_id:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: false
+      notnull: false
+      autoincrement: false
+    person_responsible_id:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: false
+      notnull: false
+      autoincrement: false
+    person_contact_id:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: false
+      notnull: false
+      autoincrement: false
+    institute_id:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: false
+      notnull: false
+      autoincrement: false
+    resource_repository_id:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: false
+      notnull: false
+      autoincrement: false
+    name:
+      type: string(80)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+    url:
+      type: string(200)
+      fixed: false
+      unsigned: false
+      primary: false
+      default: 'http://'
+      notnull: true
+      autoincrement: false
+    is_restricted:
+      type: boolean
+      fixed: false
+      unsigned: false
+      primary: false
+      default: '0'
+      notnull: true
+      autoincrement: false
+    access_comment:
+      type: string()
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    brief:
+      type: string(140)
+      fixed: false
+      unsigned: false
+      primary: false
+      default: ''
+      notnull: true
+      autoincrement: false
+    description:
+      type: string()
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    non_epn_location:
+      type: string(130)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    howto:
+      type: string()
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    howto_url1:
+      type: string(150)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    howto_url2:
+      type: string(150)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    howto_url3:
+      type: string(150)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    biblio_ref1:
+      type: string(150)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    biblio_ref2:
+      type: string(150)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    associated_url1:
+      type: string(150)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    associated_url2:
+      type: string(150)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    associated_url3:
+      type: string(150)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    associated_url4:
+      type: string(150)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    start_date:
+      type: date(25)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    stop_date:
+      type: date(25)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    is_english:
+      type: boolean
+      fixed: false
+      unsigned: false
+      primary: false
+      default: '1'
+      notnull: true
+      autoincrement: false
+    non_english_language:
+      type: enum(8)
+      fixed: false
+      unsigned: false
+      values:
+        - Chinese
+        - Danish
+        - Dutch
+        - Finnish
+        - French
+        - German
+        - Italian
+        - Japanese
+        - Spanish
+        - Russian
+        - Other
+      primary: false
+      notnull: false
+      autoincrement: false
+    language:
+      type: enum(7)
+      fixed: false
+      unsigned: false
+      values:
+        - English
+        - French
+        - German
+        - Italian
+        - Spanish
+      primary: false
+      default: English
+      notnull: false
+      autoincrement: false
+    responsible_name:
+      type: string(60)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    responsible_email:
+      type: string(60)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    contact_name:
+      type: string(60)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    contact_email:
+      type: string(60)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    resourceformat_id:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: false
+      notnull: false
+      autoincrement: false
+    size:
+      type: string()
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    process_level:
+      type: string()
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    status:
+      type: string()
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    format_comment:
+      type: string()
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    is_copy:
+      type: boolean
+      fixed: false
+      unsigned: false
+      primary: false
+      default: '0'
+      notnull: true
+      autoincrement: false
+    associated_url_comment:
+      type: string()
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    other_node_thematic:
+      type: string(60)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+  relations:
+    Institute:
+      local: institute_id
+      foreign: id
+      type: one
+    Node:
+      local: node_id
+      foreign: id
+      type: one
+    Person:
+      local: person_id
+      foreign: id
+      type: one
+    Person_4:
+      class: Person
+      local: person_contact_id
+      foreign: id
+      type: one
+    Person_5:
+      class: Person
+      local: person_responsible_id
+      foreign: id
+      type: one
+    Person_6:
+      class: Person
+      local: person_updater_id
+      foreign: id
+      type: one
+    Node_7:
+      class: Node
+      local: node_id
+      foreign: id
+      type: one
+    Resourceformat:
+      local: resourceformat_id
+      foreign: id
+      type: one
+    Resourcetype:
+      local: resourcetype_id
+      foreign: id
+      type: one
+    ResourceExpertise:
+      local: id
+      foreign: resource_id
+      type: many
+    ResourceKeyword:
+      local: id
+      foreign: resource_id
+      type: many
+    ResourceNode:
+      local: id
+      foreign: resource_id
+      type: many
+    ResourceSciencecase:
+      local: id
+      foreign: resource_id
+      type: many
+ResourceExpertise:
+  connection: doctrine
+  tableName: resource_expertise
+  columns:
+    resource_id:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: true
+      autoincrement: false
+    expertise_id:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: true
+      autoincrement: false
+  relations:
+    Resource:
+      local: resource_id
+      foreign: id
+      type: one
+    Expertise:
+      local: expertise_id
+      foreign: id
+      type: one
+ResourceKeyword:
+  connection: doctrine
+  tableName: resource_keyword
+  columns:
+    keyword_id:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: true
+      autoincrement: false
+    resource_id:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: true
+      autoincrement: false
+  relations:
+    Resource:
+      local: resource_id
+      foreign: id
+      type: one
+    Keyword:
+      local: keyword_id
+      foreign: id
+      type: one
+ResourceNode:
+  connection: doctrine
+  tableName: resource_node
+  columns:
+    node_id:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: true
+      autoincrement: false
+    resource_id:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: true
+      autoincrement: false
+  relations:
+    Resource:
+      local: resource_id
+      foreign: id
+      type: one
+    Node:
+      local: node_id
+      foreign: id
+      type: one
+ResourceSciencecase:
+  connection: doctrine
+  tableName: resource_sciencecase
+  columns:
+    resource_id:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: true
+      autoincrement: false
+    sciencecase_id:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: true
+      autoincrement: false
+  relations:
+    Resource:
+      local: resource_id
+      foreign: id
+      type: one
+    Sciencecase:
+      local: sciencecase_id
+      foreign: id
+      type: one
+Resourceformat:
+  connection: doctrine
+  tableName: resourceformat
+  columns:
+    id:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: true
+      autoincrement: true
+    name:
+      type: string(30)
+      fixed: false
+      unsigned: false
+      primary: false
+      default: ''
+      notnull: true
+      autoincrement: false
+  relations:
+    Resource:
+      local: id
+      foreign: resourceformat_id
+      type: many
+Resourcetype:
+  connection: doctrine
+  tableName: resourcetype
+  columns:
+    id:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: true
+      autoincrement: true
+    name:
+      type: string(60)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+  relations:
+    Resource:
+      local: id
+      foreign: resourcetype_id
+      type: many
+Sciencecase:
+  connection: doctrine
+  tableName: sciencecase
+  columns:
+    id:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: true
+      autoincrement: true
+    node_id:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: false
+      notnull: true
+      autoincrement: false
+    num:
+      type: string(5)
+      fixed: true
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+    name:
+      type: string(100)
+      fixed: false
+      unsigned: false
+      primary: false
+      default: ''
+      notnull: true
+      autoincrement: false
+    description:
+      type: string()
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    url:
+      type: string(150)
+      fixed: false
+      unsigned: false
+      primary: false
+      default: 'http://'
+      notnull: false
+      autoincrement: false
+  relations:
+    Node:
+      local: node_id
+      foreign: id
+      type: one
+    N2dwgSciencecase:
+      local: id
+      foreign: sciencecase_id
+      type: many
+    NodeSciencecase:
+      local: id
+      foreign: sciencecase_id
+      type: many
+    PersonSciencecase:
+      local: id
+      foreign: sciencecase_id
+      type: many
+    ResourceSciencecase:
+      local: id
+      foreign: sciencecase_id
+      type: many
+Task:
+  connection: doctrine
+  tableName: task
+  actAs : { Timestampable: ~ }
+  columns:
+    id:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: true
+      autoincrement: true
+    person_id:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: false
+      default: '0'
+      notnull: true
+      autoincrement: false
+    name:
+      type: string(60)
+      fixed: false
+      unsigned: false
+      primary: false
+      default: ''
+      notnull: true
+      autoincrement: false
+    description:
+      type: string()
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    is_public:
+      type: boolean
+      fixed: false
+      unsigned: false
+      primary: false
+      default: '0'
+      notnull: true
+      autoincrement: false
+    priority:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: false
+      default: '1'
+      notnull: true
+      autoincrement: false
+    priority_old:
+      type: enum(9)
+      fixed: false
+      unsigned: false
+      values:
+        - 'very high'
+        - high
+        - medium
+        - low
+        - 'very low'
+      primary: false
+      default: 'very high'
+      notnull: true
+      autoincrement: false
+    is_done:
+      type: boolean
+      fixed: false
+      unsigned: false
+      primary: false
+      default: '0'
+      notnull: true
+      autoincrement: false
+    done:
+      type: date(25)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    category:
+      type: enum(12)
+      fixed: false
+      unsigned: false
+      values:
+        - 'bug fix'
+        - modification
+        - 'new addition'
+      primary: false
+      default: 'new addition'
+      notnull: true
+      autoincrement: false
+    topic:
+      type: enum(9)
+      fixed: false
+      unsigned: false
+      values:
+        - framework
+        - project
+      primary: false
+      default: project
+      notnull: true
+      autoincrement: false
+    level:
+      type: enum(12)
+      fixed: false
+      unsigned: false
+      values:
+        - structure
+        - presentation
+        - data
+      primary: false
+      default: structure
+      notnull: true
+      autoincrement: false
+  relations:
+    Person:
+      local: person_id
+      foreign: id
+      type: one
