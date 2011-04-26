@@ -19,10 +19,6 @@ Doctrine_Manager::getInstance()->bindComponent('Person', 'doctrine');
  * @property enum $profile
  * @property boolean $is_enabled
  * @property boolean $is_epn_contact
- * @property string $name
- * @property string $firstname
- * @property string $email
- * @property string $pass
  * @property string $tel
  * @property string $fax
  * @property string $department
@@ -64,10 +60,6 @@ Doctrine_Manager::getInstance()->bindComponent('Person', 'doctrine');
  * @method enum                getProfile()             Returns the current record's "profile" value
  * @method boolean             getIsEnabled()           Returns the current record's "is_enabled" value
  * @method boolean             getIsEpnContact()        Returns the current record's "is_epn_contact" value
- * @method string              getName()                Returns the current record's "name" value
- * @method string              getFirstname()           Returns the current record's "firstname" value
- * @method string              getEmail()               Returns the current record's "email" value
- * @method string              getPass()                Returns the current record's "pass" value
  * @method string              getTel()                 Returns the current record's "tel" value
  * @method string              getFax()                 Returns the current record's "fax" value
  * @method string              getDepartment()          Returns the current record's "department" value
@@ -108,10 +100,6 @@ Doctrine_Manager::getInstance()->bindComponent('Person', 'doctrine');
  * @method Person              setProfile()             Sets the current record's "profile" value
  * @method Person              setIsEnabled()           Sets the current record's "is_enabled" value
  * @method Person              setIsEpnContact()        Sets the current record's "is_epn_contact" value
- * @method Person              setName()                Sets the current record's "name" value
- * @method Person              setFirstname()           Sets the current record's "firstname" value
- * @method Person              setEmail()               Sets the current record's "email" value
- * @method Person              setPass()                Sets the current record's "pass" value
  * @method Person              setTel()                 Sets the current record's "tel" value
  * @method Person              setFax()                 Sets the current record's "fax" value
  * @method Person              setDepartment()          Sets the current record's "department" value
@@ -270,43 +258,6 @@ abstract class BasePerson extends sfDoctrineRecord
              'default' => '0',
              'notnull' => false,
              'autoincrement' => false,
-             ));
-        $this->hasColumn('name', 'string', 30, array(
-             'type' => 'string',
-             'fixed' => 0,
-             'unsigned' => false,
-             'primary' => false,
-             'notnull' => true,
-             'autoincrement' => false,
-             'length' => 30,
-             ));
-        $this->hasColumn('firstname', 'string', 30, array(
-             'type' => 'string',
-             'fixed' => 0,
-             'unsigned' => false,
-             'primary' => false,
-             'default' => '',
-             'notnull' => true,
-             'autoincrement' => false,
-             'length' => 30,
-             ));
-        $this->hasColumn('email', 'string', 60, array(
-             'type' => 'string',
-             'fixed' => 0,
-             'unsigned' => false,
-             'primary' => false,
-             'notnull' => true,
-             'autoincrement' => false,
-             'length' => 60,
-             ));
-        $this->hasColumn('pass', 'string', 41, array(
-             'type' => 'string',
-             'fixed' => 0,
-             'unsigned' => false,
-             'primary' => false,
-             'notnull' => true,
-             'autoincrement' => false,
-             'length' => 41,
              ));
         $this->hasColumn('tel', 'string', 30, array(
              'type' => 'string',

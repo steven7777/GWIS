@@ -7,6 +7,6 @@ all:
     param:
       dsn:      mysql:host=localhost;dbname=europlanet
       username: ludovic
-      password: mysqlmotdepasse
+      password: myw8btxz
       attributes:
         use_native_enum: true
