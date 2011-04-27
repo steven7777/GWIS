@@ -1327,35 +1327,35 @@ Person:
       notnull: false
       autoincrement: false
 # Migration name, firstname, email and pass to sf_guard_user table
-#    name:
-#      type: string(30)
-#      fixed: false
-#      unsigned: false
-#      primary: false
-#      notnull: true
-#      autoincrement: false
-#    firstname:
-#      type: string(30)
-#      fixed: false
-#      unsigned: false
-#      primary: false
-#      default: ''
-#      notnull: true
-#      autoincrement: false
-#    email:
-#      type: string(60)
-#      fixed: false
-#      unsigned: false
-#      primary: false
-#      notnull: true
-#      autoincrement: false
-#    pass:
-#      type: string(41)
-#      fixed: false
-#      unsigned: false
-#      primary: false
-#      notnull: true
-#      autoincrement: false
+    name:
+      type: string(30)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+    firstname:
+      type: string(30)
+      fixed: false
+      unsigned: false
+      primary: false
+      default: ''
+      notnull: true
+      autoincrement: false
+    email:
+      type: string(60)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+    pass:
+      type: string(41)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
     tel:
       type: string(30)
       fixed: false
