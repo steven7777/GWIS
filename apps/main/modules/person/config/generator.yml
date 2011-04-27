@@ -14,8 +14,13 @@ generator:
     config:
       actions: ~
       fields:  ~
-      list:    ~
-      filter:  ~
-      form:    ~
+      list:
+        display: [email_address, =last_name, first_name]
+      filter:
+        display: [email_address, last_name, created_at]
+      form:
+        class: sfGuardUserAdminForm
+        display:
+          User: [email_address, password, password_again, last_name, first_name, Person]
       edit:    ~
       new:     ~

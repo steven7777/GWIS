@@ -1404,6 +1404,7 @@ Person:
     User:
       class: sfGuardUser
       foreignType: one
+      onDelete: CASCADE
     Domain:
       local: domain_id
       foreign: id

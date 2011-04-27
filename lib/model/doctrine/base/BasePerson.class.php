@@ -323,7 +323,8 @@ abstract class BasePerson extends sfDoctrineRecord
         parent::setUp();
         $this->hasOne('sfGuardUser as User', array(
              'local' => 'sf_guard_user_id',
-             'foreign' => 'id'));
+             'foreign' => 'id',
+             'onDelete' => 'CASCADE'));
 
         $this->hasOne('Domain', array(
              'local' => 'domain_id',
